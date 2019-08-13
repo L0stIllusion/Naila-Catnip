@@ -13,8 +13,8 @@ import kotlin.reflect.full.createInstance
 
 const val PREFIX = "!"
 
-val mainLogger = LogManager.getLogger("Naila [MAIN]")
-val parsingLogger = LogManager.getLogger("Naila [MESSAGE PARSER]")
+val mainLogger = LogManager.getLogger("Naila [MAIN]")!!
+val parsingLogger = LogManager.getLogger("Naila [MESSAGE PARSER]")!!
 
 val commands: List<Command> = run {
     KlassIndex.getSubclasses(Command::class)
@@ -40,10 +40,8 @@ fun main(args: Array<String>) {
 
 fun parseMessage(message: Message) {
     parsingLogger.debug("MESSAGE RECEIVED(CHANNEL: ${message.channelId()}, AUTHOR: ${message.author().id()}): ${message.content()}")
-    val command = commands
-        .filter { message.content().startsWith(PREFIX+it.key, ignoreCase = true) }
-        .firstOrNull()
-    if(command?.permissionHandler?.invoke(message) == true) return command?.execute(message)
+    val command = commands.firstOrNull { message.content().startsWith(PREFIX + it.key, ignoreCase = true) }
+    if(command?.permissionHandler?.invoke(message) == true) return command.execute(message)
     if(message.content().startsWith(PREFIX))
         baseEmbed.updateEmbed {
             color(Color.RED)

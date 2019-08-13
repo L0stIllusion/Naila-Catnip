@@ -2,7 +2,6 @@ package bot.naila.discordbot
 
 import com.mewna.catnip.entity.builder.EmbedBuilder
 import com.mewna.catnip.entity.channel.MessageChannel
-import java.awt.Color
 
 class EmbedMessage: EmbedBuilder() {
     companion object {
@@ -10,7 +9,7 @@ class EmbedMessage: EmbedBuilder() {
         val baseEmbed =
             EmbedMessage()
                 .updateEmbed {
-                    color(Color.WHITE)
+                    color(11533055)
                 }
     }
 
