@@ -1,0 +1,15 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="bot.naila.discordbot.NailaKt" type="JetRunConfigurationType" factoryName="Kotlin" nameIsGenerated="true">
+    <module name="discordbot.main" />
+    <option name="VM_PARAMETERS" value="" />
+    <option name="PROGRAM_PARAMETERS" value="NjEwNDQzMTE5MjI1NDcxMDA3.XVFVog.daKszU4fyEarxLghIaQo7zo4RxU" />
+    <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+    <option name="ALTERNATIVE_JRE_PATH" />
+    <option name="PASS_PARENT_ENVS" value="true" />
+    <option name="MAIN_CLASS_NAME" value="bot.naila.discordbot.NailaKt" />
+    <option name="WORKING_DIRECTORY" value="" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
