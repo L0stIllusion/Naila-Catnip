@@ -1,0 +1,19 @@
+{
+  "misc": {
+    "ping": {
+      "response": "Pong! :ping_pong:"
+    }
+  },
+  "config": {
+    "set": {
+      "language": {
+        "success": "¡Se ha actualizado correctamente el idioma del $type al $language!",
+        "fail": "¡Error al actualizar el idioma del $type al $language",
+        "unknown": "Lenguaje desconocido!",
+        "available": "**Idiomas Disponibles**",
+        "languageList": "¡Aquí están todos los idiomas disponibles!\n$languages"
+      },
+      "default": "Elija una de las siguientes opciones configurables para actualizar."
+    }
+  }
+}

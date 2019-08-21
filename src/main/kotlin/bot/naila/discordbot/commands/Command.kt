@@ -9,7 +9,7 @@ typealias PermissionHandler = (message: Message) -> Boolean
 abstract class Command {
     abstract val keys: List<String>
     //overrideable to have custom permission handling
-    val permissionHandler: PermissionHandler = { true }
+    open val permissionHandler: PermissionHandler = { true }
 
     abstract fun execute(message: Message)
 }
