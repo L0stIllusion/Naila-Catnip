@@ -4,8 +4,6 @@ package bot.naila.discordbot.commands.config
 
 import bot.naila.discordbot.commands.PermissionHandler
 import bot.naila.discordbot.database.NailaDatabase.makeRequest
-import bot.naila.discordbot.translator.Locale
-import bot.naila.discordbot.translator.toTranslatedText
 import bot.naila.discordbot.utils.EmbedMessage
 import com.mewna.catnip.entity.message.Message
 import com.mewna.catnip.entity.util.Permission
@@ -13,8 +11,6 @@ import java.awt.Color
 
 class GuildSet: ConfigSet<GuildSet>(GuildSet::class.java) {
     override val keys: List<String> = listOf("guildset", "gset")
-
-    private val availableLanguages = Locale.values().map { it.name.toLowerCase().capitalize() }.joinToString("") { "$it\n" }
 
     override val permissionHandler: PermissionHandler = Handler@{
         return@Handler when {
@@ -41,15 +37,7 @@ class GuildSet: ConfigSet<GuildSet>(GuildSet::class.java) {
 
     @ConfigType("language")
     private fun setLangauge(message: Message) {
-        val selectedLanguage = getLanguage(message) {
-            EmbedMessage.baseEmbed()
-                .updateEmbed {
-                    color(Color.RED)
-                    val list = "config.set.language.languageList".toTranslatedText(message, formatter = { format("\$languages", "```\n$availableLanguages\n```") })
-                    description("config.set.language.unknown".toTranslatedText(message))
-                    field("config.set.language.available".toTranslatedText(message), list, false)
-                }.sendMessage(message.channel())
-        } ?: return
+        val selectedLanguage = getLanguage(message, ::handleNullLanguage) ?: return
         val languageName = selectedLanguage.name.toLowerCase().capitalize()
         makeRequest({
             prepareStatement(

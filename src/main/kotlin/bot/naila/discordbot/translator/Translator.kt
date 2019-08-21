@@ -10,6 +10,8 @@ import com.fasterxml.jackson.databind.node.NullNode
 import com.mewna.catnip.entity.message.Message
 import java.net.URL
 
+val availableLanguages = Locale.values().map { it.name.toLowerCase().capitalize() }.joinToString("") { "$it\n" }
+
 open class Translator(locale: Locale) {
     internal open val file: URL = javaClass.getResource("/${locale.localeName}.json")
     internal open val cache: MutableMap<String, String> = mutableMapOf()
