@@ -9,8 +9,7 @@ class TestCommand: Command() {
 
     override fun execute(message: Message) {
         EmbedMessage.baseEmbedWithFooter(message)
-            .updateEmbed {
-                translatedDescription("misc.ping.response") { format("\$date", LocalDateTime.now()) }
-            }.sendMessage(message.channel())
+            .translatedDescription("misc.ping.response", message.author().idAsLong(), message.guildIdAsLong())
+            .sendMessage(message.channel())
     }
 }

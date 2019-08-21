@@ -9,14 +9,22 @@ group 'bot.naila'
 version '1.0-SNAPSHOT'
 mainClassName = 'bot.naila.discordbot.NailaKt'
 
+mainClassName = 'bot.naila.discordbot.NailaKt'
 sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
     maven { url 'https://jitpack.io' }
+    jcenter()
 }
 
 dependencies {
+    //database
+    implementation 'org.postgresql:postgresql:42.2.6'
+
+    //json
+    implementation 'com.fasterxml.jackson.core:jackson-core:2.9.4'
+
     //index commands
     implementation 'com.github.matfax.klassindex:library:4.0.1'
     kapt 'com.github.matfax.klassindex:processor:4.0.1'
