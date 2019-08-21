@@ -1,5 +1,6 @@
 package bot.naila.discordbot
 
+import bot.naila.discordbot.utils.EmbedMessage
 import bot.naila.discordbot.commands.Command
 import bot.naila.discordbot.utils.EmbedMessage.Companion.baseEmbed
 import com.github.matfax.klassindex.KlassIndex
@@ -52,14 +53,17 @@ fun main(args: Array<String>) {
 fun parseMessage(message: Message) {
     parsingLogger.debug("MESSAGE RECEIVED(CHANNEL: ${message.channelId()}, AUTHOR: ${message.author().id()}): ${message.content()}")
     val command = commands.firstOrNull { it.keys.any { message.content().startsWith(PREFIX + it, ignoreCase = true) } }
-    if(message.author().bot()) return
-    if(command != null)
-        if(command.permissionHandler(message)) return command.execute(message)
+    if (command?.permissionHandler?.invoke(message) == true) return command.execute(message)
+    if (message.author().bot()) return
+    if (command != null)
+        if (command.permissionHandler(message)) return command.execute(message)
         else return
-    if(message.content().startsWith(PREFIX))
+    if (message.content().startsWith(PREFIX))
         baseEmbed().updateEmbed {
-            color(Color.RED)
-            description("Unknown command!")
-        }.sendMessage(message.channel())
+            EmbedMessage.baseEmbed().updateEmbed {
+                color(Color.RED)
+                description("Unknown command!")
+            }.sendMessage(message.channel())
+        }
 }
 
