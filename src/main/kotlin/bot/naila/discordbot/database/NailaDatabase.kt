@@ -10,12 +10,12 @@ object NailaDatabase {
     init {
         Class.forName("org.postgresql.Driver")
         //autocreate users
-        makeRequest({
+        makeRequest(request = {
             prepareStatement("create table if not exists users(id bigint primary key not null, langPref text)")
                 .execute()
         })
         //autocreate servers
-        makeRequest({
+        makeRequest(request = {
             prepareStatement("create table if not exists servers(id bigint primary key not null, langPref text)")
                 .execute()
         })

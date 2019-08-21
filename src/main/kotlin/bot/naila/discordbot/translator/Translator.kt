@@ -66,12 +66,12 @@ enum class Locale(val localeName: String) {
 
 inline fun String.toTranslatedText(forUser: Long? = null, forServer: Long? = null, formatter: Formatter.() -> Formatter = { this }, onFail: () -> Unit = {}): String {
     val langPref = NailaDatabase
-        .makeRequest({
+        .makeRequest(request = {
             prepareStatement("select langpref from users where id = $forUser")
                 .executeAndPositionQuery {
                     it.getString(1)
                 }
-        }) ?: NailaDatabase.makeRequest ({
+        }) ?: NailaDatabase.makeRequest (request = {
         prepareStatement("select langpref from servers where id = $forServer")
             .executeAndPositionQuery {
                 it.getString(1)
@@ -80,10 +80,10 @@ inline fun String.toTranslatedText(forUser: Long? = null, forServer: Long? = nul
 
     val language = Locale.getLocaleByName(langPref)!!
 
-    return (language.getTranslator()
+    return language.getTranslator()
         .getTranslationByKey(this)
         ?.let { formatter(Formatter(it)).finish() }
-        ?: "Error translating message! Unknown response key ``$this``".also { onFail() })
+        ?: "Error translating message! Unknown response key ``$this``".also { onFail() }
 }
 
 inline fun String.toTranslatedText(message: Message, formatter: Formatter.() -> Formatter = { this }, onFail: () -> Unit = {}): String =
