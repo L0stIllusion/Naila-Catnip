@@ -11,6 +11,7 @@ import java.awt.Color
 
 class GuildSet: ConfigSet<GuildSet>(GuildSet::class.java) {
     override val keys: List<String> = listOf("guildset", "gset")
+    override val descriptionKey: String = "config.set.server.description"
 
     override val permissionHandler: PermissionHandler = Handler@{
         return@Handler when {

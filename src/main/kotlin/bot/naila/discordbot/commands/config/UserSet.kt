@@ -7,6 +7,7 @@ import java.awt.Color
 
 class UserSet: ConfigSet<UserSet>(UserSet::class.java) {
     override val keys: List<String> = listOf("userset", "uset")
+    override val descriptionKey: String = "config.set.user.description"
 
     @ConfigType("language")
     private fun setLangauge(message: Message) {

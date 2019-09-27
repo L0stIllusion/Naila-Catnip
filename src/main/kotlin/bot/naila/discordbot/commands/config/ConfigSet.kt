@@ -2,6 +2,7 @@ package bot.naila.discordbot.commands.config
 
 import bot.naila.discordbot.commands
 import bot.naila.discordbot.commands.Command
+import bot.naila.discordbot.commands.CommandCategory
 import bot.naila.discordbot.translator.Locale
 import bot.naila.discordbot.translator.availableLanguages
 import bot.naila.discordbot.translator.toTranslatedText
@@ -12,6 +13,7 @@ import java.lang.reflect.Method
 
 abstract class ConfigSet<C: ConfigSet<C>>(private val klass: Class<C>): Command() {
     private val instance by lazy { commands.filterIsInstance(klass).first() }
+    override val commandCategory: CommandCategory = CommandCategory.CONFIG
 
     private val configOptions: Map<ConfigType, Method> =
         klass
