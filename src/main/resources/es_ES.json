@@ -1,11 +1,18 @@
 {
   "misc": {
     "ping": {
+      "description": "Prueba para ver si el bot está vivo.",
       "response": "Pong! :ping_pong:"
     }
   },
   "config": {
     "set": {
+      "user": {
+        "description": "Establece opciones configurables para usted, el usuario."
+      },
+      "server": {
+        "description": "Establece opciones configurables para el servidor."
+      },
       "language": {
         "success": "¡Se ha actualizado correctamente el idioma del $type al $language!",
         "fail": "¡Error al actualizar el idioma del $type al $language",
@@ -14,6 +21,19 @@
         "languageList": "¡Aquí están todos los idiomas disponibles!\n$languages"
       },
       "default": "Elija una de las siguientes opciones configurables para actualizar."
+    }
+  },
+  "help": {
+    "description": "Te ayuda a usar comandos \\:).",
+    "defaultDesc": "Una lista de categorías que puede consultar ``!help category/command``",
+    "unknown": "Comando desconocido, ``$key``!"
+  },
+  "categories": {
+    "misc": {
+      "desc": "Comandos que realmente no encajan en otras categorías."
+    },
+    "config": {
+      "desc": "Comandos que le permiten establecer opciones configurables para el servidor o el usuario.\n"
     }
   }
 }
