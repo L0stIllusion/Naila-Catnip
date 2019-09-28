@@ -15,6 +15,7 @@ import kotlin.reflect.full.createInstance
 import kotlin.system.exitProcess
 
 const val PREFIX = "!"
+val OWNERS = listOf(173237945149423619L, 204411501535166464)
 
 val mainLogger: Logger = LogManager.getLogger("Naila [MAIN]")
 val parsingLogger: Logger = LogManager.getLogger("Naila [MESSAGE PARSER]")
@@ -42,7 +43,7 @@ fun main(args: Array<String>) {
         mainLogger.info("you did it cunt, congratulations")
         api = it
         it.observable(DiscordEvent.MESSAGE_CREATE)
-            .subscribe(::parseMessage)
+            .subscribe(::parseMessage) {it.printStackTrace()}
         it.connect()
     }, {
         mainLogger.error("you fucking twat that token is wrong")
