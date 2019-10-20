@@ -1,15 +1,12 @@
 package bot.naila.discordbot
 
-import bot.naila.discordbot.utils.EmbedMessage
 import bot.naila.discordbot.commands.Command
-import bot.naila.discordbot.utils.EmbedMessage.Companion.baseEmbed
 import com.github.matfax.klassindex.KlassIndex
 import com.mewna.catnip.Catnip
 import com.mewna.catnip.entity.message.Message
 import com.mewna.catnip.shard.DiscordEvent
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
-import java.awt.Color
 import java.lang.reflect.Modifier
 import kotlin.reflect.full.createInstance
 import kotlin.system.exitProcess
@@ -54,17 +51,12 @@ fun main(args: Array<String>) {
 fun parseMessage(message: Message) {
     parsingLogger.debug("MESSAGE RECEIVED(CHANNEL: ${message.channelId()}, AUTHOR: ${message.author().id()}): ${message.content()}")
     val command = commands.firstOrNull { it.keys.any { message.content().startsWith(PREFIX + it, ignoreCase = true) } }
-    if (command?.permissionHandler?.invoke(message) == true) return command.execute(message)
-    if (message.author().bot()) return
-    if (command != null)
-        if (command.permissionHandler(message)) return command.execute(message)
-        else return
-    if (message.content().startsWith(PREFIX))
-        baseEmbed().updateEmbed {
-            EmbedMessage.baseEmbed().updateEmbed {
-                color(Color.RED)
-                description("Unknown command!")
-            }.sendMessage(message.channel())
-        }
+    if(command != null) executeCommand(message, command)
+}
+
+fun executeCommand(message: Message, target: Command) {
+    //if author is a bot or if permission handler returns false, ignore the command
+    if(message.author().bot() || !target.permissionHandler.invoke(message)) return
+    else target.execute(message)
 }
 
