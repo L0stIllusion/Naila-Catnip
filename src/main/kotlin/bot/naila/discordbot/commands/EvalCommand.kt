@@ -3,9 +3,9 @@ package bot.naila.discordbot.commands
 import bot.naila.discordbot.OWNERS
 import bot.naila.discordbot.api
 import com.mewna.catnip.entity.message.Message
+import org.apache.commons.lang3.exception.ExceptionUtils
 import java.awt.Color
 import javax.script.ScriptEngineManager
-import javax.script.ScriptException
 
 class EvalCommand: Command() {
     override val keys: List<String> = listOf("eval")
@@ -40,22 +40,20 @@ class EvalCommand: Command() {
                             addFields(fields, false)
                         }
                 }
-            } catch(e: ScriptException) {
+            } catch(e: Throwable) {
+                val root = ExceptionUtils.getRootCause(e)
                 respond(message.channel()) {
                     baseEmbed().updateEmbed {
                         color(Color.RED)
                         title("Exception has been thrown!")
                         val fields = mapOf(
                             "Eval" to "```kotlin\n${code}```",
-                            "Exception Type" to "```kotlin\n${e.javaClass.simpleName}```".trimMargin(),
-                            "Stacktrace" to "```kotlin\n${e.message}```"
+                            "Exception Type" to "```kotlin\n${root.javaClass.simpleName}```".trimMargin(),
+                            "Stacktrace" to "```kotlin\n${ExceptionUtils.getMessage(root)}```"
                         )
                         addFields(fields, false)
                     }
                 }
-            } catch(e: Throwable) {
-                e.printStackTrace()
-                respond("what the fuck just happened\n```\n${e}\n```", message.channel())
             }
         }
     }

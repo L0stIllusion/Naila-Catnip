@@ -48,12 +48,12 @@ class HelpCommand: Command() {
             }
             command != null -> respond(message.channel()) {
                 baseEmbedWithFooter(message)
-                    .addFields(mapOf(
-                        "Description" to command.descriptionKey.toTranslatedText(message),
-                        "Aliases" to command.keys.joinToString(", ")
-                    ), false)
                     .updateEmbed {
                         title("${command.keys[0].capitalize()} Command")
+                        addFields(mapOf(
+                            "Description" to command.descriptionKey.toTranslatedText(message),
+                            "Aliases" to command.keys.joinToString(", ")
+                        ), false)
                     }
             }
         }
