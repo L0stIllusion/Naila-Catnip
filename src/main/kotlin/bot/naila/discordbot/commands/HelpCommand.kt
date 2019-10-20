@@ -10,7 +10,7 @@ class HelpCommand: Command() {
     override val descriptionKey: String = "help.description"
     override val commandCategory: CommandCategory = CommandCategory.MISC
 
-    private val keyPattern = "help(\\s(?<key>\\w*))?".toPattern()
+    private val keyPattern = """help(\s(?<key>\w*))?""".toPattern()
     private fun findKey(content: String): String = keyPattern.matcher(content).also { it.find() }.group("key") ?: ""
 
     override fun execute(message: Message) {
