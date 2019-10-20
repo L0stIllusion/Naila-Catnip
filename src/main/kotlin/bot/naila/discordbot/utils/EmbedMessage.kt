@@ -49,7 +49,7 @@ class EmbedMessage: EmbedBuilder(), Cloneable {
 
     fun translatedDescription(key: String, message: Message, formatter: Formatter.() -> Formatter = { this }): EmbedMessage = translatedDescription(key, message.author().idAsLong(), message.guildIdAsLong(), formatter)
 
-    fun sendMessage(channel: MessageChannel) = channel.asTextChannel().sendMessage(this.build())
+    fun sendMessage(channel: MessageChannel) = channel.sendMessage(this.build())
 
     override fun clone(): EmbedBuilder {
         return EmbedBuilder(this.build())

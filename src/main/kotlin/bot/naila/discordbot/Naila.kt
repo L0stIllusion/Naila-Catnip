@@ -1,6 +1,7 @@
 package bot.naila.discordbot
 
 import bot.naila.discordbot.commands.Command
+import bot.naila.discordbot.utils.PermissionHandler
 import com.github.matfax.klassindex.KlassIndex
 import com.mewna.catnip.Catnip
 import com.mewna.catnip.entity.message.Message
@@ -56,7 +57,7 @@ fun parseMessage(message: Message) {
 
 fun executeCommand(message: Message, target: Command) {
     //if author is a bot or if permission handler returns false, ignore the command
-    if(message.author().bot() || !target.permissionHandler.invoke(message)) return
+    if(message.author().bot() || !target.permissionHandler(PermissionHandler(message))) return
     else target.execute(message)
 }
 

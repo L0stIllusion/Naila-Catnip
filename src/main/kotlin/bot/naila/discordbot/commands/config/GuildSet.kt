@@ -2,9 +2,9 @@
 
 package bot.naila.discordbot.commands.config
 
-import bot.naila.discordbot.commands.PermissionHandler
 import bot.naila.discordbot.database.NailaDatabase.makeRequest
 import bot.naila.discordbot.utils.EmbedMessage
+import bot.naila.discordbot.utils.PermissionHandler
 import com.mewna.catnip.entity.message.Message
 import com.mewna.catnip.entity.util.Permission
 import java.awt.Color
@@ -12,29 +12,24 @@ import java.awt.Color
 class GuildSet: ConfigSet<GuildSet>(GuildSet::class.java) {
     override val keys: List<String> = listOf("guildset", "gset")
     override val descriptionKey: String = "config.set.server.description"
-
-    override val permissionHandler: PermissionHandler = Handler@{
-        return@Handler when {
-            it.guild() == null -> {
-                EmbedMessage.baseEmbed()
+    override val permissionHandler: PermissionHandler.() -> Boolean = {
+        handle(
+            customCheck({ it.guild() != null  }) {
+                EmbedMessage.baseEmbedWithFooter(message)
                     .updateEmbed {
                         color(Color.RED)
                         description("You must be in a guild to set guild-related configurations!")
-                    }.sendMessage(it.channel())
-                false
-            }
-            it.member()!!.hasPermissions(Permission.MANAGE_GUILD) || it.guild()!!.owned() -> true
-            else -> {
-                EmbedMessage.baseEmbed()
+                    }.sendMessage(message.channel())
+            },
+            authorHasPerms(Permission.MANAGE_GUILD) {
+                EmbedMessage.baseEmbedWithFooter(message)
                     .updateEmbed {
                         color(Color.RED)
                         description("You must have MANAGE_GUILD permissions to update guild configurations.")
-                    }.sendMessage(it.channel())
-                false
+                    }.sendMessage(message.channel())
             }
-        }
+        )
     }
-
 
     @ConfigType("language")
     private fun setLangauge(message: Message) {

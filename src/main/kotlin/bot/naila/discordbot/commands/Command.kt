@@ -1,11 +1,11 @@
 package bot.naila.discordbot.commands
 
 import bot.naila.discordbot.utils.EmbedMessage
+import bot.naila.discordbot.utils.PermissionHandler
 import com.github.matfax.klassindex.IndexSubclasses
 import com.mewna.catnip.entity.channel.MessageChannel
 import com.mewna.catnip.entity.message.Message
 
-typealias PermissionHandler = (message: Message) -> Boolean
 
 @IndexSubclasses
 abstract class Command {
@@ -13,7 +13,7 @@ abstract class Command {
     abstract val descriptionKey: String
     abstract val commandCategory: CommandCategory
     //overrideable to have custom permission handling
-    open val permissionHandler: PermissionHandler = { true }
+    open val permissionHandler: PermissionHandler.() -> Boolean = { handle(customCheck({ it.guild() != null })) }
 
     abstract fun execute(message: Message)
 
